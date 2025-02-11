@@ -68,7 +68,7 @@ router.post('/login', async (req, res) => {
 
         console.log('User logged in:', req.session.user); // Debugging
 
-        res.redirect('/profile'); // Redirect to profile page
+        res.redirect('/'); // Redirect to main page
 
     } catch (error) {
         console.error('Error logging in:', error);
