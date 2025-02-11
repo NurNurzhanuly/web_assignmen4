@@ -238,8 +238,8 @@ nav a:hover {
 }
 
 .profile-picture img {
-  width: 150px; /* Увеличенный размер */
-  height: 150px;
+  width: 50px; /* Увеличенный размер */
+  height: 50px;
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease; /* Анимация при наведении */
