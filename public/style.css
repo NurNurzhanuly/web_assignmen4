@@ -1,49 +1,85 @@
 /* Общие стили */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', sans-serif; /* Более современный шрифт */
   margin: 0;
   padding: 0;
-  background-color: #f8f9fa; /* Светло-серый фон */
-  color: #343a40; /* Темно-серый текст */
-  line-height: 1.6;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Градиентный фон */
+  color: #495057; /* Мягкий темно-серый текст */
+  line-height: 1.7;
+  overflow-x: hidden; /* Предотвращает горизонтальную прокрутку */
 }
 
+/* Анимация фона (здесь можно использовать что-то более интересное) */
+body::before {
+content: "";
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f0f4f8;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e0e5ea;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23gradient)' /%3E%3C/svg%3E");
+background-size: 200% 200%;
+z-index: -1;
+animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+0% {
+  background-position: 0% 50%;
+}
+50% {
+  background-position: 100% 50%;
+}
+100% {
+  background-position: 0% 50%;
+}
+}
+
+
 .container {
-  width: 80%;
-  max-width: 1200px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Легкая тень */
+  width: 85%; /* Немного больше места */
+  max-width: 1300px;
+  margin: 30px auto; /* Больше отступов сверху и снизу */
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.9); /* Белый с прозрачностью */
+  border-radius: 12px; /* Более скругленные углы */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Более выраженная тень */
+  transition: transform 0.3s ease; /* Плавное масштабирование при наведении */
+}
+
+.container:hover {
+  transform: translateY(-5px); /* Подъем при наведении */
 }
 
 h1, h2 {
-  color: #007bff; /* Синий цвет для заголовков */
-  margin-bottom: 15px;
-  border-bottom: 2px solid #dee2e6; /* Тонкая линия под заголовками */
-  padding-bottom: 5px;
+  color: #2c3e50; /* Темно-синий для заголовков */
+  margin-bottom: 20px;
+  border-bottom: 3px solid #bdc3c7; /* Более толстая линия */
+  padding-bottom: 8px;
+  font-weight: 500; /* Полужирный шрифт */
 }
 
 a {
-  color: #007bff;
+  color: #3498db; /* Яркий синий */
   text-decoration: none;
-  transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+  transition: color 0.3s ease, text-shadow 0.3s ease; /* Плавное изменение цвета и тени */
 }
 
 a:hover {
-  color: #0056b3; /* Более темный синий при наведении */
+  color: #2980b9; /* Более темный синий при наведении */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Тень при наведении */
 }
 
 /* Стили для форм */
 form {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: 600; /* Более жирный шрифт */
+  color: #555;
 }
 
 input[type="email"],
@@ -51,56 +87,94 @@ input[type="password"],
 input[type="text"],
 textarea {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  box-sizing: border-box; /* Важно для правильного расчета ширины */
-  font-size: 16px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd; /* Более толстая рамка */
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 17px; /* Увеличенный размер шрифта */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  border-color: #3498db; /* Синий цвет при фокусе */
+  outline: none; /* Убираем стандартную обводку при фокусе */
+  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3); /* Легкая тень при фокусе */
 }
 
 textarea {
-  height: 150px;
-  resize: vertical; /* Разрешить вертикальное изменение размера */
+  height: 180px;
+  resize: vertical;
 }
 
 button {
-  background-color: #007bff;
+  background-color: #3498db;
   color: #fff;
-  padding: 12px 20px;
+  padding: 14px 25px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
+  font-size: 18px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для кнопки */
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px); /* Подъем при наведении */
 }
+
+button:active {
+  transform: translateY(0); /* Возврат в исходное положение при клике */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Меньшая тень при клике */
+}
+
 
 /* Стили для сообщений об ошибках */
 .error {
-  color: #dc3545; /* Красный цвет для ошибок */
+  color: #e74c3c; /* Красный цвет для ошибок */
   list-style-type: none;
   padding: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #e74c3c; /* Рамка вокруг ошибок */
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgba(231, 76, 60, 0.1); /* Легкий красный фон */
 }
 
 .error li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 25px; /* Отступ для иконки */
+}
+
+.error li::before {
+  content: '\f071'; /* Иконка восклицательного знака (Font Awesome) */
+  font-family: FontAwesome; /* Подключите Font Awesome */
+  position: absolute;
+  left: 5px;
+  top: 0;
+  color: #c0392b;
 }
 
 /* Стили для списков */
 ul {
-  padding-left: 20px;
+  padding-left: 30px;
 }
 
 /* Стили для навигации */
 nav {
-  background-color: #343a40;
+  background: linear-gradient(to right, #34495e, #2c3e50); /* Градиентный фон для навбара */
   color: #fff;
-  padding: 10px 0;
+  padding: 15px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для навбара */
+  position: sticky;
+  top: 0;
+  z-index: 100; /* Убедитесь, что навбар всегда сверху */
 }
 
 nav ul {
@@ -109,32 +183,42 @@ nav ul {
   margin: 0;
   display: flex;
   justify-content: space-around;
+  align-items: center; /* Выравнивание по вертикали */
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
-  padding: 10px 15px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 nav a:hover {
-  background-color: #007bff;
+  background-color: rgba(255, 255, 255, 0.1); /* Светлый фон при наведении */
+  transform: scale(1.1); /* Увеличение при наведении */
 }
 
 /* Стили для профиля */
 .profile-picture {
   border-radius: 50%;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  overflow: hidden; /* Обрезаем изображение по форме круга */
+  border: 5px solid rgba(255, 255, 255, 0.5); /* Белая обводка */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для аватара */
 }
 
 .profile-picture img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  object-fit: cover; /* Заполняем контейнер, обрезая изображение */
+  display: block; /* Убираем лишний отступ снизу */
+  transition: transform 0.3s ease;
+}
+
+.profile-picture:hover img {
+  transform: scale(1.1); /* Увеличение аватара при наведении */
 }
 
 /* Требования к паролю (register.ejs) */
@@ -142,40 +226,71 @@ nav a:hover {
 .password-requirements {
   list-style: none;
   padding: 0;
-  margin-top: 5px;
-  font-size: 0.8em;
-  color: #6c757d; /* Gray */
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #777;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .password-requirements li {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
+  position: relative;
+  padding-left: 25px;
 }
 
-.password-requirements li.valid {
-  color: #28a745; /* Green */
+.password-requirements li::before {
+  content: '\f00d'; /* Default invalid icon */
+  font-family: FontAwesome;
+  position: absolute;
+  left: 5px;
+  top: 0;
+  color: #d32f2f; /* Red */
 }
 
-.password-requirements li.invalid {
-  color: #dc3545; /* Red */
+.password-requirements li.valid::before {
+  content: '\f00c'; /* Check icon */
+  color: #4caf50; /* Green */
 }
 
 /* Media Queries для адаптивности */
 @media (max-width: 768px) {
   .container {
       width: 95%;
+      margin: 20px auto;
+      padding: 20px;
   }
 
   nav ul {
       flex-direction: column;
-      align-items: center;
+      align-items: stretch; /* Растягиваем элементы на всю ширину */
   }
 
   nav li {
       margin-bottom: 5px;
+      text-align: center; /* Выравниваем текст по центру */
+  }
+
+  nav a {
+      display: block; /* Занимает всю ширину li */
   }
 }
 
-/* Utilities */
+/* Дополнительные утилиты */
 .mt-2 {
   margin-top: 2em;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Футер */
+footer {
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 50px;
 }
