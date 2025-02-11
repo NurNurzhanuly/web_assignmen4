@@ -11,6 +11,7 @@ const path = require('path');
 const Note = require('./models/Note');
 const User = require('./models/User');
 const { body, validationResult } = require('express-validator'); // Import express-validator
+const multer = require('multer');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -49,6 +50,16 @@ const isLoggedIn = (req, res, next) => {
         res.redirect('/auth/login');
     }
 };
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/');  // Store uploaded files in the 'public/uploads' directory
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Rename the file
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Routes
 app.use('/auth', authRoutes);
@@ -135,6 +146,45 @@ app.post('/profile/edit', isLoggedIn, [
     } catch (error) {
         console.error('Error updating profile:', error);
         res.status(500).send('An error occurred while updating the profile.');
+    }
+});
+
+app.post('/profile/delete', isLoggedIn, async (req, res) => {
+  try {
+      await User.findByIdAndDelete(req.session.userId);
+      req.session.destroy((err) => {
+          if (err) {
+              console.error('Error destroying session:', err);
+              return res.redirect('/');
+          }
+          res.redirect('/auth/register');
+      });
+  } catch (error) {
+      console.error('Error deleting account:', error);
+      res.status(500).send('An error occurred while deleting the account.');
+  }
+});
+
+app.post('/profile/upload', isLoggedIn, upload.single('profilePicture'), async (req, res) => {
+    try {
+        const userId = req.session.userId;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Update the user's profile picture
+        user.profilePicture = '/uploads/' + req.file.filename;  // Save the file path to the database
+        await user.save();
+
+        // Update the session
+        req.session.user.profilePicture = user.profilePicture;
+
+        res.redirect('/profile');
+    } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        res.status(500).send('An error occurred while uploading the profile picture.');
     }
 });
 

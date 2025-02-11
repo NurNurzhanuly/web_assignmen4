@@ -48,14 +48,30 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            return res.render('login', { error: 'Invalid email or password.' });
+            return res.render('login', { error: 'Invalid email.' });
+        }
+        if (user.lockUntil && user.lockUntil > Date.now()) {
+            // Account is locked
+            const timeRemaining = Math.ceil((user.lockUntil - Date.now()) / 60000);
+            return res.render('login', { error: `Account locked. Try again in ${timeRemaining} minutes.` });
         }
 
         const isPasswordValid = await user.isValidPassword(password);
 
         if (!isPasswordValid) {
-            return res.render('login', { error: 'Invalid email or password.' });
+             // Increment login attempts
+            user.loginAttempts += 1;
+            if (user.loginAttempts >= 5) {
+                user.lockUntil = new Date(Date.now() + 15 * 60 * 1000); // Lock for 15 minutes
+            }
+            await user.save();
+            return res.render('login', { error: 'Invalid password.' });
         }
+
+        // Reset login attempts on successful login
+        user.loginAttempts = 0;
+        user.lockUntil = undefined;
+        await user.save();
 
         // Set session
         req.session.userId = user._id;

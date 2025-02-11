@@ -5,12 +5,14 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     username: { type: String, required: true },
-    firstName: { type: String, default: '' },  // New field
-    lastName: { type: String, default: '' },   // New field
-    location: { type: String, default: '' },   // New field
-    website: { type: String, default: '' },    // New field
-    bio: { type: String, default: '' }
-    // Add other fields like profilePicture, roles, etc. here
+    firstName: { type: String, default: '' },
+    lastName: { type: String, default: '' },
+    location: { type: String, default: '' },
+    website: { type: String, default: '' },
+    bio: { type: String, default: '' },
+    profilePicture: { type: String, default: '/images/default-profile.png' }, // Store the path to the profile picture
+    loginAttempts: { type: Number, default: 0 },
+    lockUntil: { type: Date }
 });
 
 // Hash the password before saving

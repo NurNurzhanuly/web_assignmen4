@@ -9,6 +9,13 @@
 
     <% if (editing) { %>
         <h2>Edit Profile</h2>
+        <% if (errors && errors.length > 0) { %>
+            <ul class="error">
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                <% }); %>
+            </ul>
+        <% } %>
         <form action="/profile/edit" method="POST">
             <div>
                 <label for="username">Username:</label>
@@ -38,6 +45,13 @@
             <a href="/profile">Cancel</a>
         </form>
     <% } else { %>
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" width="100">
+        <h2>Update Picture</h2>
+        <form action="/profile/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="profilePicture">
+            <button type="submit">Upload</button>
+        </form>
+
         <p>Username: <%= user.username %></p>
         <p>Email: <%= user.email %></p>
         <p>First Name: <%= user.firstName %></p>
@@ -45,8 +59,14 @@
         <p>Location: <%= user.location %></p>
         <p>Website: <%= user.website %></p>
         <p>Bio: <%= user.bio %></p>
+
         <a href="/profile?edit=true">Edit Profile</a>
         <a href="/auth/logout">Logout</a>
+
+        <h2>Danger Zone</h2>
+        <form action="/profile/delete" method="POST">
+            <button type="submit">Delete Account</button>
+        </form>
     <% } %>
 </body>
 </html>
