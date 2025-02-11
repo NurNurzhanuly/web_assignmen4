@@ -64,7 +64,13 @@ app.get('/profile', isLoggedIn, async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.redirect('/auth/login');
+    if (req.session.userId) {
+        // User is logged in, render the main page
+        res.render('main', { user: req.session.user });
+    } else {
+        // User is not logged in, render the index page
+        res.render('index');
+    }
 });
 
 app.listen(port, () => {
