@@ -1,85 +1,106 @@
 /* Общие стили */
 body {
-  font-family: 'Roboto', sans-serif; /* Более современный шрифт */
+  font-family: 'Nunito', sans-serif; /* Современный шрифт */
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #f8f9fa, #e9ecef); /* Градиентный фон */
-  color: #495057; /* Мягкий темно-серый текст */
+  background: linear-gradient(to bottom, #e0e5ec, #f0f4f8); /* Нежный градиент */
+  color: #333; /* Мягкий темно-серый */
   line-height: 1.7;
-  overflow-x: hidden; /* Предотвращает горизонтальную прокрутку */
+  overflow-x: hidden; /* Предотвратить горизонтальную прокрутку */
+  position: relative; /* Для позиционирования анимации */
 }
 
-/* Анимация фона (здесь можно использовать что-то более интересное) */
+/* Анимация фона */
 body::before {
-content: "";
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23f0f4f8;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23e0e5ea;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23gradient)' /%3E%3C/svg%3E");
-background-size: 200% 200%;
-z-index: -1;
-animation: gradientAnimation 15s ease infinite;
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e0e5ec;stop-opacity:0.5" /><stop offset="100%" style="stop-color:#f0f4f8;stop-opacity:0.5" /></linearGradient></defs><rect width="100" height="100" fill="url(%23gradient)" /></svg>'); /* Узорчатый фон */
+  background-size: 200% 200%;
+  z-index: -1;
+  animation: backgroundAnimation 30s linear infinite; /* Медленная анимация */
 }
 
-@keyframes gradientAnimation {
-0% {
-  background-position: 0% 50%;
-}
-50% {
-  background-position: 100% 50%;
-}
-100% {
-  background-position: 0% 50%;
-}
+@keyframes backgroundAnimation {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
 }
 
 
 .container {
-  width: 85%; /* Немного больше места */
-  max-width: 1300px;
-  margin: 30px auto; /* Больше отступов сверху и снизу */
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.9); /* Белый с прозрачностью */
-  border-radius: 12px; /* Более скругленные углы */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Более выраженная тень */
-  transition: transform 0.3s ease; /* Плавное масштабирование при наведении */
+  width: 85%;
+  max-width: 1400px;
+  margin: 40px auto; /* Увеличиваем отступы */
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.95); /* Белый с небольшой прозрачностью */
+  border-radius: 15px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Усиленная тень */
+  transition: transform 0.4s ease-in-out; /* Плавный переход */
 }
 
 .container:hover {
-  transform: translateY(-5px); /* Подъем при наведении */
+  transform: translateY(-8px); /* Подъем при наведении */
 }
 
 h1, h2 {
-  color: #2c3e50; /* Темно-синий для заголовков */
-  margin-bottom: 20px;
-  border-bottom: 3px solid #bdc3c7; /* Более толстая линия */
-  padding-bottom: 8px;
-  font-weight: 500; /* Полужирный шрифт */
+  color: #34495e; /* Темно-серый цвет */
+  margin-bottom: 25px;
+  border-bottom: 4px solid #ddd; /* Толстая, светлая линия */
+  padding-bottom: 10px;
+  font-weight: 700; /* Жирный шрифт */
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); /* Легкая тень текста */
 }
 
 a {
-  color: #3498db; /* Яркий синий */
+  color: #5dade2; /* Светло-голубой */
   text-decoration: none;
-  transition: color 0.3s ease, text-shadow 0.3s ease; /* Плавное изменение цвета и тени */
+  transition: color 0.4s ease, transform 0.3s ease; /* Плавные переходы */
+  display: inline-block; /* Для поддержки transform */
 }
 
 a:hover {
-  color: #2980b9; /* Более темный синий при наведении */
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+  color: #2e86c1; /* Темнее при наведении */
+  transform: scale(1.05); /* Небольшое увеличение при наведении */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Небольшая тень при наведении */
+}
+
+/* Карточки */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Умеренная тень */
+  padding: 25px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Подъем при наведении */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Увеличение тени */
 }
 
 /* Стили для форм */
 form {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600; /* Более жирный шрифт */
+  margin-bottom: 10px;
+  font-weight: 600;
   color: #555;
+  text-transform: uppercase; /* Заглавные буквы */
+  letter-spacing: 1px; /* Отступы между буквами */
 }
 
 input[type="email"],
@@ -87,94 +108,94 @@ input[type="password"],
 input[type="text"],
 textarea {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: 2px solid #ddd; /* Более толстая рамка */
-  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 2px solid #e0e0e0; /* Светлая обводка */
+  border-radius: 8px;
   box-sizing: border-box;
-  font-size: 17px; /* Увеличенный размер шрифта */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 18px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus,
 textarea:focus {
-  border-color: #3498db; /* Синий цвет при фокусе */
-  outline: none; /* Убираем стандартную обводку при фокусе */
-  box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3); /* Легкая тень при фокусе */
+  border-color: #5dade2; /* Голубой при фокусе */
+  outline: none;
+  box-shadow: 0 4px 8px rgba(93, 173, 226, 0.2); /* Голубая тень при фокусе */
 }
 
 textarea {
-  height: 180px;
+  height: 200px;
   resize: vertical;
 }
 
 button {
-  background-color: #3498db;
+  background-color: #5dade2;
   color: #fff;
-  padding: 14px 25px;
+  padding: 16px 30px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тень для кнопки */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Плавные переходы */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Тень для кнопки */
 }
 
 button:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px); /* Подъем при наведении */
+  background-color: #2e86c1;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличение тени */
 }
 
 button:active {
-  transform: translateY(0); /* Возврат в исходное положение при клике */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Меньшая тень при клике */
+  transform: translateY(0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Уменьшение тени */
 }
 
 
 /* Стили для сообщений об ошибках */
 .error {
-  color: #e74c3c; /* Красный цвет для ошибок */
+  color: #e74c3c;
   list-style-type: none;
-  padding: 0;
-  margin-bottom: 20px;
-  border: 1px solid #e74c3c; /* Рамка вокруг ошибок */
-  border-radius: 5px;
-  padding: 10px;
-  background-color: rgba(231, 76, 60, 0.1); /* Легкий красный фон */
+  padding: 15px;
+  margin-bottom: 25px;
+  border: 2px solid #e74c3c;
+  border-radius: 10px;
+  background-color: rgba(231, 76, 60, 0.15);
+  position: relative;
 }
 
 .error li {
-  margin-bottom: 8px;
-  position: relative;
-  padding-left: 25px; /* Отступ для иконки */
+  margin-bottom: 10px;
+  padding-left: 30px;
 }
 
 .error li::before {
-  content: '\f071'; /* Иконка восклицательного знака (Font Awesome) */
-  font-family: FontAwesome; /* Подключите Font Awesome */
+  content: '\f06a'; /* Предупреждающий значок */
+  font-family: FontAwesome;
   position: absolute;
-  left: 5px;
+  left: 15px;
   top: 0;
-  color: #c0392b;
+  color: #c0392b; /* Более темный красный */
 }
 
 /* Стили для списков */
 ul {
-  padding-left: 30px;
+  padding-left: 35px;
 }
 
 /* Стили для навигации */
 nav {
-  background: linear-gradient(to right, #34495e, #2c3e50); /* Градиентный фон для навбара */
+  background: linear-gradient(to right, #34495e, #2c3e50); /* Темный градиент */
   color: #fff;
-  padding: 15px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для навбара */
+  padding: 20px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: sticky;
   top: 0;
-  z-index: 100; /* Убедитесь, что навбар всегда сверху */
+  z-index: 100;
 }
 
 nav ul {
@@ -183,98 +204,116 @@ nav ul {
   margin: 0;
   display: flex;
   justify-content: space-around;
-  align-items: center; /* Выравнивание по вертикали */
+  align-items: center;
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  padding: 12px 20px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding: 15px 25px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 nav a:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Светлый фон при наведении */
-  transform: scale(1.1); /* Увеличение при наведении */
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Стили для профиля */
 .profile-picture {
   border-radius: 50%;
-  margin-bottom: 20px;
-  overflow: hidden; /* Обрезаем изображение по форме круга */
-  border: 5px solid rgba(255, 255, 255, 0.5); /* Белая обводка */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень для аватара */
+  margin-bottom: 25px;
+  overflow: hidden;
+  border: 6px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s ease; /* Анимация при наведении */
+}
+
+.profile-picture:hover {
+  transform: scale(1.1);
 }
 
 .profile-picture img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover; /* Заполняем контейнер, обрезая изображение */
-  display: block; /* Убираем лишний отступ снизу */
-  transition: transform 0.3s ease;
-}
-
-.profile-picture:hover img {
-  transform: scale(1.1); /* Увеличение аватара при наведении */
+  width: 150px; /* Увеличенный размер */
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease; /* Анимация при наведении */
 }
 
 /* Требования к паролю (register.ejs) */
 
 .password-requirements {
   list-style: none;
-  padding: 0;
-  margin-top: 10px;
-  font-size: 0.9em;
+  padding: 15px;
+  margin-top: 15px;
+  font-size: 0.95em;
   color: #777;
-  background-color: #f0f0f0;
-  padding: 10px;
-  border-radius: 5px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .password-requirements li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   position: relative;
-  padding-left: 25px;
+  padding-left: 30px;
 }
 
 .password-requirements li::before {
-  content: '\f00d'; /* Default invalid icon */
+  content: '\f057'; /* Крестик */
   font-family: FontAwesome;
   position: absolute;
-  left: 5px;
+  left: 15px;
   top: 0;
-  color: #d32f2f; /* Red */
+  color: #d32f2f;
 }
 
 .password-requirements li.valid::before {
-  content: '\f00c'; /* Check icon */
-  color: #4caf50; /* Green */
+  content: '\f058'; /* Галочка */
+  color: #4caf50;
 }
 
 /* Media Queries для адаптивности */
 @media (max-width: 768px) {
   .container {
       width: 95%;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 30px auto;
+      padding: 30px;
   }
 
   nav ul {
       flex-direction: column;
-      align-items: stretch; /* Растягиваем элементы на всю ширину */
+      align-items: stretch;
   }
 
   nav li {
-      margin-bottom: 5px;
-      text-align: center; /* Выравниваем текст по центру */
+      margin-bottom: 8px;
+      text-align: center;
   }
 
   nav a {
-      display: block; /* Занимает всю ширину li */
+      display: block;
   }
+
+  /* Адаптивность карточек (можно использовать grid для более сложных случаев) */
+  .card {
+      margin-bottom: 15px;
+  }
+}
+
+/* Футер */
+footer {
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 25px 0;
+  margin-top: 60px;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
 }
 
 /* Дополнительные утилиты */
@@ -286,11 +325,17 @@ nav a:hover {
   text-align: center;
 }
 
-/* Футер */
-footer {
-  background-color: #343a40;
-  color: #fff;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: 50px;
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .flex-row {
+      flex-direction: column;
+      align-items: stretch;
+  }
 }
