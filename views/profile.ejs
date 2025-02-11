@@ -51,6 +51,9 @@
             <input type="file" name="profilePicture">
             <button type="submit">Upload</button>
         </form>
+        <form action="/profile/remove-picture" method="POST">
+            <button type="submit">Remove Profile Picture</button>
+        </form>
 
         <p>Username: <%= user.username %></p>
         <p>Email: <%= user.email %></p>
