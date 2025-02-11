@@ -10,8 +10,10 @@ const dataRoutes = require('./routes/data');
 const path = require('path');
 const Note = require('./models/Note');
 const User = require('./models/User');
-const { body, validationResult } = require('express-validator'); // Import express-validator
+const { body, validationResult } = require('express-validator');
 const multer = require('multer');
+const fs = require('fs'); // Import the fs module
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,9 +52,16 @@ const isLoggedIn = (req, res, next) => {
         res.redirect('/auth/login');
     }
 };
+
+// Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/uploads/');  // Store uploaded files in the 'public/uploads' directory
+        const uploadDir = path.join(__dirname, 'public', 'uploads'); // Construct the full path
+        // Check if the directory exists, and create it if it doesn't
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true }); // Create the directory recursively
+        }
+        cb(null, uploadDir);  // Store uploaded files in the 'public/uploads' directory
     },
     filename: function (req, file, cb) {
         cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); // Rename the file
@@ -172,6 +181,12 @@ app.post('/profile/upload', isLoggedIn, upload.single('profilePicture'), async (
 
         if (!user) {
             return res.status(404).send('User not found');
+        }
+         // Check if a file was uploaded
+        if (!req.file) {
+            // Handle the case where no file was uploaded
+            console.log('No file uploaded');
+            return res.redirect('/profile');
         }
 
         // Update the user's profile picture
