@@ -1,85 +1,181 @@
+/* Общие стили */
 body {
-    font-family: sans-serif;
-    margin: 20px;
-    background-color: #f0f0f0;
-  }
-  
-  h1 {
-    color: #333;
-    text-align: center;
-  }
-  
-  a {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  a:hover {
-    text-decoration: underline;
-  }
-  
-  input[type="email"],
-  input[type="password"],
-  input[type="text"],
-  textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .error {
-    color: red;
-    margin-bottom: 10px;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  h3 {
-      margin-top: 0;
-  }
-
-  ul.password-requirements {
-    list-style: none;
-    padding: 0;
-    margin-top: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa; /* Светло-серый фон */
+  color: #343a40; /* Темно-серый текст */
+  line-height: 1.6;
 }
 
-ul.password-requirements li {
-    font-size: 0.8em;
-    color: #888;
+.container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Легкая тень */
 }
 
-ul.password-requirements li.valid {
-    color: green;
+h1, h2 {
+  color: #007bff; /* Синий цвет для заголовков */
+  margin-bottom: 15px;
+  border-bottom: 2px solid #dee2e6; /* Тонкая линия под заголовками */
+  padding-bottom: 5px;
 }
 
-ul.password-requirements li.invalid {
-    color: red;
+a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Плавное изменение цвета при наведении */
+}
+
+a:hover {
+  color: #0056b3; /* Более темный синий при наведении */
+}
+
+/* Стили для форм */
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box; /* Важно для правильного расчета ширины */
+  font-size: 16px;
+}
+
+textarea {
+  height: 150px;
+  resize: vertical; /* Разрешить вертикальное изменение размера */
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Стили для сообщений об ошибках */
+.error {
+  color: #dc3545; /* Красный цвет для ошибок */
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.error li {
+  margin-bottom: 5px;
+}
+
+/* Стили для списков */
+ul {
+  padding-left: 20px;
+}
+
+/* Стили для навигации */
+nav {
+  background-color: #343a40;
+  color: #fff;
+  padding: 10px 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #007bff;
+}
+
+/* Стили для профиля */
+.profile-picture {
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-picture img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* Требования к паролю (register.ejs) */
+
+.password-requirements {
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  font-size: 0.8em;
+  color: #6c757d; /* Gray */
+}
+
+.password-requirements li {
+  margin-bottom: 3px;
+}
+
+.password-requirements li.valid {
+  color: #28a745; /* Green */
+}
+
+.password-requirements li.invalid {
+  color: #dc3545; /* Red */
+}
+
+/* Media Queries для адаптивности */
+@media (max-width: 768px) {
+  .container {
+      width: 95%;
+  }
+
+  nav ul {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  nav li {
+      margin-bottom: 5px;
+  }
+}
+
+/* Utilities */
+.mt-2 {
+  margin-top: 2em;
 }
