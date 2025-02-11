@@ -238,7 +238,7 @@ nav a:hover {
 }
 
 .profile-picture img {
-  width: 50px; /* Увеличенный размер */
+  width: 150px; /* Увеличенный размер */
   height: 50px;
   object-fit: cover;
   display: block;
