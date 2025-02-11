@@ -52,7 +52,7 @@
                 <div class="profile-picture">
                     <img src="<%= user.profilePicture || '/images/default-profile.png' %>" alt="Profile Picture">
                 </div>
-        
+
                 <h2>Update Picture</h2>
                 <form action="/profile/upload" method="POST" enctype="multipart/form-data">
                     <input type="file" name="profilePicture">
@@ -68,12 +68,20 @@
                 <p>Location: <%= user.location %></p>
                 <p>Website: <%= user.website %></p>
                 <p>Bio: <%= user.bio %></p>
-        
+
                 <div class="flex-row">
                     <a href="/profile?edit=true">Edit Profile</a>
                     <a href="/auth/logout">Logout</a>
                 </div>
-        
+
+            </div>
+
+            <div class="card">
+                <h2>Danger Zone</h2>
+                <p>Careful, these actions can't be undone.</p>
+                <form action="/profile/delete" method="POST">
+                    <button type="submit" class="danger-button">Delete Account</button>
+                </form>
             </div>
         <% } %>
     </div>
