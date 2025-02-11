@@ -8,8 +8,9 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const dataRoutes = require('./routes/data');
 const path = require('path');
-const Note = require('./models/Note'); // Import the Note model
-const User = require('./models/User'); // Import the User model
+const Note = require('./models/Note');
+const User = require('./models/User');
+const { body, validationResult } = require('express-validator'); // Import express-validator
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -57,16 +58,45 @@ app.use('/data', dataRoutes);
 app.get('/profile', isLoggedIn, async (req, res) => {
     try {
         const notes = await Note.find({ userId: req.session.userId }); // Fetch notes
-        res.render('profile', { user: req.session.user, notes: notes }); // Pass notes to the view
+        const user = await User.findById(req.session.userId).lean(); // Get user data
+
+        const editMode = req.query.edit === 'true';
+        
+        res.render('profile', { 
+            user: user, 
+            notes: notes, 
+            editing: editMode,
+            errors: [] // Initialize errors array
+         });
     } catch (error) {
-        console.error('Error fetching notes:', error);
-        res.render('profile', { user: req.session.user, notes: [], error: 'Failed to fetch notes.' }); // Handle error
+        console.error('Error fetching data:', error);
+        res.render('profile', { user: req.session.user, notes: [], error: 'Failed to fetch notes.', editing: false, errors: [] }); // Handle error
     }
 });
 
-app.post('/profile/edit', isLoggedIn, async (req, res) => {
+app.post('/profile/edit', isLoggedIn, [
+    body('username').trim().isLength({ min: 3, max: 20 }).withMessage('Username must be between 3 and 20 characters'),
+    body('firstName').trim().isLength({ max: 50 }).withMessage('First name cannot be longer than 50 characters'),
+    body('lastName').trim().isLength({ max: 50 }).withMessage('Last name cannot be longer than 50 characters'),
+    body('location').trim().isLength({ max: 50 }).withMessage('Location cannot be longer than 50 characters'),
+    body('website').trim().isURL().withMessage('Website must be a valid URL').optional({ nullable: true, checkFalsy: true }),
+    body('bio').trim().isLength({ max: 200 }).withMessage('Bio cannot be longer than 200 characters')
+], async (req, res) => {
     try {
-        const { username, bio } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            // If there are validation errors, re-render the profile page with the errors
+            const notes = await Note.find({ userId: req.session.userId }); // Fetch notes
+            const user = await User.findById(req.session.userId).lean()
+            return res.render('profile', { 
+                user: user, 
+                notes: notes, 
+                editing: true, 
+                errors: errors.array() // Pass the errors to the view
+            });
+        }
+
+        const { username, firstName, lastName, location, website, bio } = req.body;
         const userId = req.session.userId;
 
         // Find the user
@@ -78,6 +108,10 @@ app.post('/profile/edit', isLoggedIn, async (req, res) => {
 
         // Update the user's information
         user.username = username;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.location = location;
+        user.website = website;
         user.bio = bio;
 
         // Save the updated user
@@ -88,6 +122,10 @@ app.post('/profile/edit', isLoggedIn, async (req, res) => {
             _id: user._id,
             email: user.email,
             username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            location: user.location,
+            website: user.website,
             bio: user.bio,
         };
 
