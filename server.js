@@ -39,17 +39,22 @@ mongoose.connect(process.env.MONGODB_URI, {
 .then(() => console.log('Connected to MongoDB Atlas'))
 .catch(err => console.error('MongoDB connection error:', err));
 
+// Middleware to check if user is logged in
+const isLoggedIn = (req, res, next) => {
+    if (req.session.userId) {
+        next();
+    } else {
+        res.redirect('/auth/login');
+    }
+};
+
 // Routes
 app.use('/auth', authRoutes);
 app.use('/data', dataRoutes);
 
 // Protected route example
-app.get('/profile', (req, res) => {
-  if (req.session.userId) {
-      res.render('profile', { user: req.session.user }); // Pass user data to the view
-  } else {
-      res.redirect('/auth/login');
-  }
+app.get('/profile', isLoggedIn, (req, res) => {
+    res.render('profile', { user: req.session.user });
 });
 
 app.get('/', (req, res) => {
