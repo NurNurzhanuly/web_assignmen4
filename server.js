@@ -1,4 +1,4 @@
-require('dotenv').config(); // Load environment variables
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,13 +8,13 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const dataRoutes = require('./routes/data');
 const path = require('path');
-
+const Note = require('./models/Note'); // Import the Note model
 
 const app = express();
-const port = process.env.PORT || 3000; // Use environment variable or default to 3000
+const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public'))); // Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
@@ -26,8 +26,8 @@ app.use(session({
     saveUninitialized: false,
     store: MongoStore.create({
         mongoUrl: process.env.MONGODB_URI,
-        ttl: 14 * 24 * 60 * 60, // = 14 days. Default
-        autoRemove: 'native' // Delete expired sessions from collection
+        ttl: 14 * 24 * 60 * 60,
+        autoRemove: 'native'
     })
 }));
 
@@ -53,12 +53,18 @@ app.use('/auth', authRoutes);
 app.use('/data', dataRoutes);
 
 // Protected route example
-app.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile', { user: req.session.user });
+app.get('/profile', isLoggedIn, async (req, res) => {
+    try {
+        const notes = await Note.find({ userId: req.session.userId }); // Fetch notes
+        res.render('profile', { user: req.session.user, notes: notes }); // Pass notes to the view
+    } catch (error) {
+        console.error('Error fetching notes:', error);
+        res.render('profile', { user: req.session.user, notes: [], error: 'Failed to fetch notes.' }); // Handle error
+    }
 });
 
 app.get('/', (req, res) => {
-  res.redirect('/auth/login');
+    res.redirect('/auth/login');
 });
 
 app.listen(port, () => {
