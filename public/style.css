@@ -64,3 +64,22 @@ body {
   h3 {
       margin-top: 0;
   }
+
+  ul.password-requirements {
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+}
+
+ul.password-requirements li {
+    font-size: 0.8em;
+    color: #888;
+}
+
+ul.password-requirements li.valid {
+    color: green;
+}
+
+ul.password-requirements li.invalid {
+    color: red;
+}

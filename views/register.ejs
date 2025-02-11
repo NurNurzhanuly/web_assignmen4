@@ -21,6 +21,13 @@
         <div>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
+            <ul class="password-requirements">
+                <li id="password-length">At least 8 characters long</li>
+                <li id="password-lowercase">One lowercase letter</li>
+                <li id="password-uppercase">One uppercase letter</li>
+                <li id="password-number">One number</li>
+                <li id="password-special">One special character</li>
+            </ul>
         </div>
         <button type="submit">Register</button>
     </form>
@@ -28,45 +35,51 @@
 
     <script>
         function validateForm() {
-            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            let isValid = true;
 
-            if (!email) {
-                alert('Please enter an email address.');
-                return false;
-            }
-
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                alert('Please enter a valid email address.');
-                return false;
-            }
+            document.getElementById('password-length').classList.remove('valid');
+            document.getElementById('password-lowercase').classList.remove('valid');
+            document.getElementById('password-uppercase').classList.remove('valid');
+            document.getElementById('password-number').classList.remove('valid');
+            document.getElementById('password-special').classList.remove('valid');
 
             if (password.length < 8) {
-                alert('Password must be at least 8 characters long.');
-                return false;
+                document.getElementById('password-length').classList.add('invalid');
+                isValid = false;
+            } else {
+                document.getElementById('password-length').classList.add('valid');
             }
 
             if (!/^(?=.*[a-z])/.test(password)) {
-                alert('Password must contain at least one lowercase letter.');
-                return false;
+                document.getElementById('password-lowercase').classList.add('invalid');
+                isValid = false;
+            }else {
+                document.getElementById('password-lowercase').classList.add('valid');
             }
 
             if (!/^(?=.*[A-Z])/.test(password)) {
-                alert('Password must contain at least one uppercase letter.');
-                return false;
+                document.getElementById('password-uppercase').classList.add('invalid');
+                isValid = false;
+            }else {
+                document.getElementById('password-uppercase').classList.add('valid');
             }
 
             if (!/\d/.test(password)) {
-                alert('Password must contain at least one number.');
-                return false;
+                document.getElementById('password-number').classList.add('invalid');
+                isValid = false;
+            }else {
+                document.getElementById('password-number').classList.add('valid');
             }
 
             if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-                alert('Password must contain at least one special character.');
-                return false;
+                document.getElementById('password-special').classList.add('invalid');
+                isValid = false;
+            }else {
+                document.getElementById('password-special').classList.add('valid');
             }
 
-            return true;
+            return isValid;
         }
     </script>
 </body>
