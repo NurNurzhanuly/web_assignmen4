@@ -9,6 +9,7 @@ const authRoutes = require('./routes/auth');
 const dataRoutes = require('./routes/data');
 const path = require('path');
 const Note = require('./models/Note'); // Import the Note model
+const User = require('./models/User'); // Import the User model
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -60,6 +61,42 @@ app.get('/profile', isLoggedIn, async (req, res) => {
     } catch (error) {
         console.error('Error fetching notes:', error);
         res.render('profile', { user: req.session.user, notes: [], error: 'Failed to fetch notes.' }); // Handle error
+    }
+});
+
+app.post('/profile/edit', isLoggedIn, async (req, res) => {
+    try {
+        const { username, bio } = req.body;
+        const userId = req.session.userId;
+
+        // Find the user
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+
+        // Update the user's information
+        user.username = username;
+        user.bio = bio;
+
+        // Save the updated user
+        await user.save();
+
+        // Update the session as well
+        req.session.user = {
+            _id: user._id,
+            email: user.email,
+            username: user.username,
+            bio: user.bio,
+        };
+
+        // Redirect back to the profile page
+        res.redirect('/profile');
+
+    } catch (error) {
+        console.error('Error updating profile:', error);
+        res.status(500).send('An error occurred while updating the profile.');
     }
 });
 

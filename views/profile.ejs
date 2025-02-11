@@ -7,34 +7,20 @@
 <body>
     <h1>Welcome, <%= user.username %>!</h1>
     <p>Email: <%= user.email %></p>
+    <p>Bio: <%= user.bio %></p>
     <a href="/auth/logout">Logout</a>
 
-    <h2>Your Notes:</h2>
-    <% if (notes && notes.length > 0) { %>
-        <ul>
-            <% notes.forEach(note => { %>
-                <li>
-                    <h3><%= note.title %></h3>
-                    <p><%= note.content %></p>
-                </li>
-            <% }); %>
-        </ul>
-    <% } else { %>
-        <p>No notes yet.</p>
-    <% } %>
-
-    <!-- Add a form to create new notes -->
-    <h2>Create a New Note:</h2>
-    <form action="/data/notes" method="POST">
+    <h2>Edit Profile</h2>
+    <form action="/profile/edit" method="POST">
         <div>
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" value="<%= user.username %>" required>
         </div>
         <div>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content" required></textarea>
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio"><%= user.bio %></textarea>
         </div>
-        <button type="submit">Create Note</button>
+        <button type="submit">Update Profile</button>
     </form>
 </body>
 </html>
