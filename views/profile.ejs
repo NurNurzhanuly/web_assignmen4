@@ -73,6 +73,9 @@
                     <a href="/profile?edit=true">Edit Profile</a>
                     <a href="/auth/logout">Logout</a>
                 </div>
+                 <% if (!user.is2FAEnabled) { %>
+                    <a href="/auth/setup-2fa" class="btn">Enable 2FA</a>
+                <% } %>
 
             </div>
 
