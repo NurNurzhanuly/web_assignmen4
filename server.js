@@ -6,14 +6,13 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
-const dataRoutes = require('./routes/data');
+const notesRoutes = require('./routes/notes'); // Подключаем routes/notes
 const path = require('path');
 const Note = require('./models/Note');
 const User = require('./models/User');
 const { body, validationResult } = require('express-validator');
 const multer = require('multer');
 const fs = require('fs'); // Import the fs module
-
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -53,6 +52,18 @@ const isLoggedIn = (req, res, next) => {
     }
 };
 
+// Middleware to check if user is logged in and has 2FA enabled
+const isLoggedInAnd2FAEnabled = (req, res, next) => {
+    if (req.session.userId && req.session.user && req.session.user.is2FAEnabled) {
+        return next();
+    } else if (req.session.userId) {
+        res.redirect('/profile'); // Redirect to profile to enable 2FA
+    }
+     else {
+        res.redirect('/auth/login');
+    }
+};
+
 // Configure multer for file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -72,7 +83,8 @@ const upload = multer({ storage: storage });
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/data', dataRoutes);
+app.use('/notes', notesRoutes); // Use the notes routes
+// app.use('/data', dataRoutes); // Убедитесь, что ЭТО удалено!
 
 // Protected route example
 app.get('/profile', isLoggedIn, async (req, res) => {
@@ -81,10 +93,10 @@ app.get('/profile', isLoggedIn, async (req, res) => {
         const user = await User.findById(req.session.userId).lean(); // Get user data
 
         const editMode = req.query.edit === 'true';
-        
-        res.render('profile', { 
-            user: user, 
-            notes: notes, 
+
+        res.render('profile', {
+            user: user,
+            notes: notes,
             editing: editMode,
             errors: [] // Initialize errors array
          });
@@ -108,10 +120,10 @@ app.post('/profile/edit', isLoggedIn, [
             // If there are validation errors, re-render the profile page with the errors
             const notes = await Note.find({ userId: req.session.userId }); // Fetch notes
             const user = await User.findById(req.session.userId).lean()
-            return res.render('profile', { 
-                user: user, 
-                notes: notes, 
-                editing: true, 
+            return res.render('profile', {
+                user: user,
+                notes: notes,
+                editing: true,
                 errors: errors.array() // Pass the errors to the view
             });
         }
