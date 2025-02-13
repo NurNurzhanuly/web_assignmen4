@@ -148,6 +148,8 @@ app.post('/profile/edit', isLoggedIn, [
             website: user.website,
             bio: user.bio,
             profilePicture: user.profilePicture,
+            is2FAEnabled: user.is2FAEnabled,
+
         };
 
         // Redirect back to the profile page
@@ -173,7 +175,10 @@ app.post('/profile/remove-picture', isLoggedIn, async (req, res) => {
         await user.save();
 
         // Update the session
-        req.session.user.profilePicture = user.profilePicture;
+        req.session.user = {
+            ...req.session.user,
+            profilePicture: user.profilePicture
+        };
 
         res.redirect('/profile');
     } catch (error) {
@@ -219,15 +224,8 @@ app.post('/profile/upload', isLoggedIn, upload.single('profilePicture'), async (
 
         // Update the session
         req.session.user = {
-            _id: user._id,
-            email: user.email,
-            username: user.username,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            location: user.location,
-            website: user.website,
-            bio: user.bio,
-            profilePicture: user.profilePicture,
+            ...req.session.user,
+            profilePicture: user.profilePicture
         };
 
         res.redirect('/profile');

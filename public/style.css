@@ -1,16 +1,16 @@
 /* Общие стили */
 body {
-  font-family: 'Nunito', sans-serif; /* Современный шрифт */
+  font-family: 'Poppins', sans-serif; /* Жирный и современный шрифт */
   margin: 0;
   padding: 0;
-  background: linear-gradient(to bottom, #e0e5ec, #f0f4f8); /* Нежный градиент */
-  color: #333; /* Мягкий темно-серый */
+  background: linear-gradient(to bottom, #f0f4f8, #e0e5ec); /* Светлый и приятный градиент */
+  color: #4a4a4a; /* Более теплый серый */
   line-height: 1.7;
-  overflow-x: hidden; /* Предотвратить горизонтальную прокрутку */
-  position: relative; /* Для позиционирования анимации */
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Анимация фона */
+/* Фоновая анимация (мягкие волны) */
 body::before {
   content: "";
   position: fixed;
@@ -18,89 +18,105 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e0e5ec;stop-opacity:0.5" /><stop offset="100%" style="stop-color:#f0f4f8;stop-opacity:0.5" /></linearGradient></defs><rect width="100" height="100" fill="url(%23gradient)" /></svg>'); /* Узорчатый фон */
-  background-size: 200% 200%;
+  background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"%3E%3Cdefs%3E %3ClinearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%"%3E %3Cstop offset="0%" style="stop-color:%23f0f4f8;stop-opacity:0.6" /%3E %3Cstop offset="100%" style="stop-color:%23e0e5ec;stop-opacity:0.6" /%3E %3C/linearGradient%3E %3C/defs%3E %3Cpath d="M0,56.5C132,118.1,341.9,45.3,586.9,109.7C820.2,165.1,1132.2,100.4,1200,58.1V120H0V56.5Z" fill="url(%23gradient)"/%3E%3C/svg%3E');
+  background-repeat: repeat-x;
+  background-size: 1200px 120px;
   z-index: -1;
-  animation: backgroundAnimation 30s linear infinite; /* Медленная анимация */
+  animation: waveAnimation 20s linear infinite;
+  opacity: 0.4; /* Более нежный эффект */
 }
 
-@keyframes backgroundAnimation {
+@keyframes waveAnimation {
   0% {
-      background-position: 0% 50%;
-  }
-  50% {
-      background-position: 100% 50%;
+      background-position: 0px 0px;
   }
   100% {
-      background-position: 0% 50%;
+      background-position: 1200px 0px;
   }
 }
 
 
 .container {
-  width: 85%;
-  max-width: 1400px;
-  margin: 40px auto; /* Увеличиваем отступы */
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.95); /* Белый с небольшой прозрачностью */
-  border-radius: 15px;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Усиленная тень */
-  transition: transform 0.4s ease-in-out; /* Плавный переход */
+  width: 90%; /* Чуть шире */
+  max-width: 1200px; /* Меньше максимальная ширина */
+  margin: 50px auto;
+  padding: 40px 50px; /* Больше пространства */
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px; /* Еще более скругленные углы */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 .container:hover {
-  transform: translateY(-8px); /* Подъем при наведении */
+  transform: translateY(-5px); /* Подъем при наведении */
 }
 
 h1, h2 {
-  color: #34495e; /* Темно-серый цвет */
+  color: #333; /* Классический темно-серый */
   margin-bottom: 25px;
-  border-bottom: 4px solid #ddd; /* Толстая, светлая линия */
-  padding-bottom: 10px;
-  font-weight: 700; /* Жирный шрифт */
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05); /* Легкая тень текста */
+  border-bottom: 5px solid #eee; /* Светлая граница */
+  padding-bottom: 12px;
+  font-weight: 700;
+  letter-spacing: -0.5px; /* Сблизить буквы */
 }
 
 a {
-  color: #5dade2; /* Светло-голубой */
+  color: #007bff; /* Яркий синий */
   text-decoration: none;
-  transition: color 0.4s ease, transform 0.3s ease; /* Плавные переходы */
-  display: inline-block; /* Для поддержки transform */
+  transition: color 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+  position: relative; /*  Для создания подчеркивания */
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px; /* Положение подчеркивания */
+  width: 100%;
+  height: 2px; /* Толщина подчеркивания */
+  background-color: #007bff;
+  transform: scaleX(0); /* Скрыть подчеркивание */
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
 }
 
 a:hover {
-  color: #2e86c1; /* Темнее при наведении */
-  transform: scale(1.05); /* Небольшое увеличение при наведении */
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); /* Небольшая тень при наведении */
+  color: #0056b3; /* Затемнение при наведении */
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2); /* Добавлена тень */
+}
+
+a:hover::after {
+  transform: scaleX(1); /* Показать подчеркивание при наведении */
+  transform-origin: bottom left;
 }
 
 /* Карточки */
 .card {
   background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Умеренная тень */
-  padding: 25px;
-  margin-bottom: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* Очень легкая тень */
+  padding: 30px; /* Больше отступов */
+  margin-bottom: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px); /* Подъем при наведении */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Увеличение тени */
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 /* Стили для форм */
 form {
-  margin-top: 40px;
+  margin-top: 45px;
 }
 
 label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-weight: 600;
   color: #555;
-  text-transform: uppercase; /* Заглавные буквы */
-  letter-spacing: 1px; /* Отступы между буквами */
+  text-transform: capitalize; /* Мягкий регистр */
+  letter-spacing: 0.5px;
 }
 
 input[type="email"],
@@ -108,91 +124,93 @@ input[type="password"],
 input[type="text"],
 textarea {
   width: 100%;
-  padding: 15px;
-  margin-bottom: 25px;
-  border: 2px solid #e0e0e0; /* Светлая обводка */
-  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 28px;
+  border: 2px solid #e6e6e6; /* Мягкий серый */
+  border-radius: 10px;
   box-sizing: border-box;
-  font-size: 18px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+  font-size: 17px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="text"]:focus,
 textarea:focus {
-  border-color: #5dade2; /* Голубой при фокусе */
+  border-color: #007bff; /* Яркий синий при фокусе */
   outline: none;
-  box-shadow: 0 4px 8px rgba(93, 173, 226, 0.2); /* Голубая тень при фокусе */
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.15); /* Синяя тень при фокусе */
 }
 
 textarea {
-  height: 200px;
+  height: 180px;
   resize: vertical;
 }
 
 button {
-  background-color: #5dade2;
+  background-color: #007bff;
   color: #fff;
-  padding: 16px 30px;
+  padding: 18px 35px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 500;
-  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Плавные переходы */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Тень для кнопки */
+  font-size: 18px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12); /* Тень для кнопки */
+  text-transform: uppercase; /* Заглавные буквы */
+  letter-spacing: 1px;
 }
 
 button:hover {
-  background-color: #2e86c1;
+  background-color: #0056b3;
   transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Увеличение тени */
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
 }
 
 button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Уменьшение тени */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Стили для сообщений об ошибках */
+/* Сообщения об ошибках */
 .error {
-  color: #e74c3c;
+  color: #d9534f; /* Красный цвет */
   list-style-type: none;
-  padding: 15px;
-  margin-bottom: 25px;
-  border: 2px solid #e74c3c;
-  border-radius: 10px;
-  background-color: rgba(231, 76, 60, 0.15);
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 2px solid #d9534f;
+  border-radius: 12px;
+  background-color: rgba(217, 83, 79, 0.1); /* Светло-красный */
   position: relative;
+  font-size: 15px;
 }
 
 .error li {
   margin-bottom: 10px;
-  padding-left: 30px;
-}
-
-.error li::before {
-  content: '\f06a'; /* Предупреждающий значок */
-  font-family: FontAwesome;
-  position: absolute;
-  left: 15px;
-  top: 0;
-  color: #c0392b; /* Более темный красный */
-}
-
-/* Стили для списков */
-ul {
   padding-left: 35px;
 }
 
-/* Стили для навигации */
+.error li::before {
+  content: '\f06a'; /* Предупреждение */
+  font-family: FontAwesome;
+  position: absolute;
+  left: 20px;
+  top: 0;
+  color: #c9302c;
+}
+
+/* Списки */
+ul {
+  padding-left: 40px;
+}
+
+/* Навигация */
 nav {
-  background: linear-gradient(to right, #34495e, #2c3e50); /* Темный градиент */
+  background: linear-gradient(to right, #343a40, #2c3e50); /* Темный градиент */
   color: #fff;
-  padding: 20px 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 22px 0;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -210,83 +228,83 @@ nav ul {
 nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: 500;
-  padding: 15px 25px;
-  border-radius: 12px;
+  font-weight: 600;
+  padding: 17px 30px;
+  border-radius: 15px;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 nav a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
   transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Стили для профиля */
+/* Профиль */
 .profile-picture {
   border-radius: 50%;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   overflow: hidden;
-  border: 4px solid rgba(255, 255, 255, 0.7); /* Чуть тоньше граница */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Меньшая тень */
+  border: 5px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
   transition: transform 0.3s ease;
-  width: 120px;  /* Фиксированная ширина */
-  height: 120px; /* Фиксированная высота */
+  width: 130px;
+  height: 130px;
   margin-left: auto;
-  margin-right: auto; /* Центрирование по горизонтали */
+  margin-right: auto;
 }
 
 .profile-picture:hover {
-  transform: scale(1.05); /* Меньшее увеличение при наведении */
+  transform: scale(1.1);
 }
 
 .profile-picture img {
-  width: 100%;   /*  Заполнение контейнера */
-  height: 100%;  /* Заполнение контейнера */
-  object-fit: cover; /* Обрезать и заполнить, сохраняя пропорции */
-  display: block; /* Убрать отступ снизу */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
   transition: transform 0.3s ease;
 }
 
 /* Требования к паролю (register.ejs) */
-
 .password-requirements {
   list-style: none;
-  padding: 15px;
-  margin-top: 15px;
-  font-size: 0.95em;
-  color: #777;
-  background-color: #f5f5f5;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  margin-top: 20px;
+  font-size: 15px;
+  color: #6c757d;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 .password-requirements li {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   position: relative;
-  padding-left: 30px;
+  padding-left: 35px;
 }
 
 .password-requirements li::before {
   content: '\f057'; /* Крестик */
   font-family: FontAwesome;
   position: absolute;
-  left: 15px;
+  left: 20px;
   top: 0;
-  color: #d32f2f;
+  color: #dc3545;
+  opacity: 0.7;
 }
 
 .password-requirements li.valid::before {
   content: '\f058'; /* Галочка */
-  color: #4caf50;
+  color: #28a745;
 }
 
 /* Media Queries для адаптивности */
 @media (max-width: 768px) {
   .container {
       width: 95%;
-      margin: 30px auto;
+      margin: 35px auto;
       padding: 30px;
   }
 
@@ -296,7 +314,7 @@ nav a:hover {
   }
 
   nav li {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       text-align: center;
   }
 
@@ -304,23 +322,13 @@ nav a:hover {
       display: block;
   }
 
-  /* Адаптивность карточек (можно использовать grid для более сложных случаев) */
-  .card {
-      margin-bottom: 15px;
+  .profile-picture {
+      width: 110px;
+      height: 110px;
   }
 }
 
-/* Футер */
-footer {
-  background-color: #343a40;
-  color: #fff;
-  text-align: center;
-  padding: 25px 0;
-  margin-top: 60px;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1); /* Тень сверху */
-}
-
-/* Дополнительные утилиты */
+/* Utilities */
 .mt-2 {
   margin-top: 2em;
 }
@@ -344,9 +352,23 @@ footer {
   }
 }
 
-@media (max-width: 576px) {
-  .profile-picture {
-      width: 80px;
-      height: 80px;
-  }
+/* Красная кнопка для удаления */
+.danger-button {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.danger-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+.danger-button:active {
+  transform: translateY(0);
 }

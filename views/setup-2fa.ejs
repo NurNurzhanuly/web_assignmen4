@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Setup 2FA</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Setup Two-Factor Authentication</h1>
+        <% if (typeof error !== 'undefined' && error) { %>
+            <ul class="error">
+                <li><%= error %></li>
+            </ul>
+        <% } %>
+
+        <p>Scan the QR code below with Google Authenticator or Authy:</p>
+        <img src="<%= qr_code %>" alt="QR Code">
+
+        <form action="/auth/enable-2fa" method="POST">
+            <div>
+                <label for="token">Enter Verification Code:</label>
+                <input type="text" id="token" name="token" required>
+            </div>
+            <button type="submit">Enable 2FA</button>
+        </form>
+
+        <a href="/profile">Cancel</a>
+    </div>
+</body>
+</html>

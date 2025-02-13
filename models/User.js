@@ -10,9 +10,11 @@ const userSchema = new mongoose.Schema({
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     bio: { type: String, default: '' },
-    profilePicture: { type: String, default: '/images/default-profile.png' }, // Store the path to the profile picture
+    profilePicture: { type: String, default: '/images/default-profile.png' },
     loginAttempts: { type: Number, default: 0 },
-    lockUntil: { type: Date }
+    lockUntil: { type: Date },
+    twoFASecret: { type: String }, // 2FA secret key
+    is2FAEnabled: { type: Boolean, default: false } // Flag for 2FA activation
 });
 
 // Hash the password before saving
