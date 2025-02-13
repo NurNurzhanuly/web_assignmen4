@@ -9,7 +9,7 @@ const authRoutes = require('./routes/auth');
 const notesRoutes = require('./routes/notes'); // Подключаем routes/notes
 const path = require('path');
 const Note = require('./models/Note');
-const User = require('../models/User');
+const User = require('./models/User');
 const { body, validationResult } = require('express-validator');
 const multer = require('multer');
 const fs = require('fs'); // Import the fs module
@@ -57,7 +57,7 @@ const isLoggedInAnd2FAEnabled = (req, res, next) => {
     if (req.session.userId && req.session.user && req.session.user.is2FAEnabled) {
         return next();
     } else if (req.session.userId) {
-        res.redirect('/auth/setup-2fa'); // Redirect to 2FA setup
+        res.redirect('/profile'); // Redirect to profile to enable 2FA
     }
      else {
         res.redirect('/auth/login');
@@ -84,8 +84,9 @@ const upload = multer({ storage: storage });
 // Routes
 app.use('/auth', authRoutes);
 app.use('/notes', notesRoutes); // Use the notes routes
+// app.use('/data', dataRoutes); // Убедитесь, что ЭТО удалено!
 
-// Protected route example (теперь защищен с помощью 2FA)
+// Protected route example
 app.get('/profile', isLoggedIn, async (req, res) => {
     try {
         const notes = await Note.find({ userId: req.session.userId }); // Fetch notes
